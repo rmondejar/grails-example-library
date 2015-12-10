@@ -6,13 +6,15 @@ import grails.test.mixin.*
 import spock.lang.*
 
 @TestFor(BookController)
-@Mock(Book)
+@Mock([Author, Book])
 class BookControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
+        params["title"] = "Nice book"
+        params["genre"] = Book.genres[0]
+        params["releaseDate"] = new Date()
+        params["author"] = new Author(name:"John",surname:"Doe")
     }
 
     void "Test the index action returns the correct model"() {
@@ -98,7 +100,7 @@ class BookControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/book/index'
+            response.redirectedUrl == '/'
             flash.message != null
 
 
@@ -130,7 +132,7 @@ class BookControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/book/index'
+            response.redirectedUrl == '/'
             flash.message != null
 
         when:"A domain instance is created"
@@ -146,7 +148,7 @@ class BookControllerSpec extends Specification {
 
         then:"The instance is deleted"
             Book.count() == 0
-            response.redirectedUrl == '/book/index'
+            response.redirectedUrl == '/'
             flash.message != null
     }
 }

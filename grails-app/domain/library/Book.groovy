@@ -25,7 +25,6 @@ class Book {
     static constraints = {
         title maxSize: 150, blank: false, nullable: false
         genre blank: false, nullable: false, inList:genres
-        releaseDate max: new Date()
     }
 }
 

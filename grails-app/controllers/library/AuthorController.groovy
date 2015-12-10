@@ -1,7 +1,5 @@
 package library
 
-
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
